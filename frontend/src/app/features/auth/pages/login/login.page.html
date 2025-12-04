@@ -1,0 +1,46 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Login</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ds-input
+        label="E-mail"
+        type="email"
+        placeholder="seu@email.com"
+        formControlName="email"
+        [error]="emailError"
+      ></ds-input>
+
+      <ds-input
+        label="Senha"
+        type="password"
+        placeholder="Sua senha"
+        formControlName="password"
+        [error]="passwordError"
+      ></ds-input>
+
+      <div class="extra-row">
+        <a routerLink="/register" class="link-small">
+          Não tem conta? Cadastre-se
+        </a>
+      </div>
+
+      <div class="error-message" *ngIf="apiError">
+        {{ apiError }}
+      </div>
+      <div class="info-message" *ngIf="infoMessage">
+        {{ infoMessage }}
+      </div>
+
+      <ds-button type="submit" variant="primary" [fullWidth]="true" [disabled]="loading">
+        Entrar
+      </ds-button>
+      
+      <a routerLink="/docs" class="link-center">
+        Ver documentação
+      </a>
+    </form>
+  </div>
+</div>
+
+

@@ -1,0 +1,125 @@
+<div class="docs-page">
+  <div class="docs-card">
+    <div class="docs-header">
+      <h1>Documentação funcional</h1>
+      <button type="button" class="back-button" (click)="goBack()">
+        Voltar
+      </button>
+    </div>
+
+    <section>
+      <h2>Login</h2>
+      <p>
+        O acesso é realizado com e-mail e senha. Em caso de sucesso, um token JWT é gerado e usado
+        automaticamente pelo frontend nas chamadas à API.
+      </p>
+      <p>
+        Para testes, existe um usuário administrador padrão:
+      </p>
+      <ul>
+        <li><strong>E-mail</strong>: <code>clenio@mail.com</code></li>
+        <li><strong>Senha</strong>: <code>123456</code></li>
+        <li><strong>Perfil</strong>: <code>ROLE_ADMIN</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Cadastro de usuário</h2>
+      <p>
+        O cadastro é feito pela tela "Cadastro", acessada a partir do link na tela de login.
+        Todo novo usuário é criado com o perfil <strong>ROLE_USER</strong>.
+      </p>
+      <p>
+        Caso seja necessário acesso administrativo, o usuário deve solicitar a um administrador já existente
+        para que seu perfil seja ajustado manualmente (por enquanto, esse ajuste é feito diretamente no backend/banco).
+      </p>
+    </section>
+
+    <section>
+      <h2>Tela de tarefas</h2>
+      <p>
+        Após o login, a tela principal é a listagem de tarefas. Cada tarefa possui:
+        título, descrição, responsável (opcional), prioridade (Alta/Média/Baixa), prazo (deadline) e status
+        (Em andamento ou Concluída).
+      </p>
+      <ul>
+        <li>
+          <strong>Ordenação</strong>: as tarefas são exibidas primeiro pelo prazo mais próximo
+          e, em caso de mesma data, pela prioridade (Alta &gt; Média &gt; Baixa).
+        </li>
+        <li>
+          <strong>Filtros</strong>: é possível filtrar por título, responsável, intervalo de datas
+          e escolher exibir apenas tarefas em andamento.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Cadastro e edição de tarefas</h2>
+      <p>
+        O botão <strong>"+ Cadastrar"</strong> abre um modal para criação de uma nova tarefa.
+        A edição também é feita em modal, acessada pela ação <strong>Editar</strong> na listagem.
+      </p>
+      <ul>
+        <li>
+          <strong>Campos obrigatórios</strong>: título, prioridade, prazo e status.
+        </li>
+        <li>
+          <strong>Responsável</strong>: é opcional e sempre é um usuário do sistema, selecionado via busca assíncrona.
+        </li>
+        <li>
+          <strong>Descrição</strong>: campo de texto livre para detalhar a tarefa.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Regras de edição, exclusão e conclusão</h2>
+      <ul>
+        <li>
+          <strong>ROLE_USER</strong>:
+          <ul>
+            <li>Pode criar tarefas.</li>
+            <li>Só pode editar, excluir ou concluir tarefas das quais é responsável.</li>
+            <li>Não pode editar nem excluir tarefas com status <strong>Concluída</strong>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>ROLE_ADMIN</strong>:
+          <ul>
+            <li>Pode editar, excluir e concluir qualquer tarefa.</li>
+            <li>Pode atribuir ou remover o responsável de qualquer tarefa.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Exclusão</strong>:
+          respeita as regras acima; usuários padrão não conseguem excluir tarefas que não sejam suas
+          ou que já estejam concluídas.
+        </li>
+        <li>
+          <strong>Conclusão</strong>:
+          só é possível concluir tarefas que tenham um responsável vinculado. A ação
+          "Concluir" deixa de aparecer ou é rejeitada pelo backend se o usuário não tiver permissão.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Vincular responsável</h2>
+      <ul>
+        <li>
+          Se a tarefa ainda não tem responsável, a ação <strong>Vincular responsável</strong> aparece no menu de ações.
+        </li>
+        <li>
+          Usuários com <strong>ROLE_USER</strong> podem se vincular diretamente a uma tarefa não atribuída
+          (a aplicação usa o usuário logado como responsável).
+        </li>
+        <li>
+          Usuários com <strong>ROLE_ADMIN</strong> podem abrir um modal específico para escolher qualquer usuário
+          do sistema como responsável.
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+

@@ -1,0 +1,23 @@
+<mat-form-field appearance="outline" class="ds-form-field" [class.ds-form-field--error]="error">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+
+  <input
+    matInput
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value"
+    [disabled]="disabled"
+    (input)="handleInput($event)"
+    (blur)="handleBlur()"
+  />
+
+  <mat-hint *ngIf="!error && hint">
+    {{ hint }}
+  </mat-hint>
+
+  <mat-error *ngIf="error">
+    {{ error }}
+  </mat-error>
+</mat-form-field>
+
+

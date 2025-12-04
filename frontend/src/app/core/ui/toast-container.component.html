@@ -1,0 +1,19 @@
+@if (toasts$ | async; as toasts) {
+  @if (toasts.length) {
+    <div class="toast-wrapper">
+      @for (toast of toasts; track trackById($index, toast)) {
+        <div
+          class="toast"
+          [class.toast-success]="toast.type === 'success'"
+          [class.toast-error]="toast.type === 'error'"
+          [class.toast-info]="toast.type === 'info'"
+        >
+          <span class="toast-text">{{ toast.text }}</span>
+          <button type="button" class="toast-close" (click)="dismiss(toast.id)">✕</button>
+        </div>
+      }
+    </div>
+  }
+}
+
+

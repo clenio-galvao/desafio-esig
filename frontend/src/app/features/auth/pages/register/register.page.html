@@ -1,0 +1,55 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Cadastrar usuário</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ds-input
+        label="Nome"
+        type="text"
+        placeholder="Seu nome completo"
+        formControlName="name"
+        [error]="nameError"
+      ></ds-input>
+
+      <ds-input
+        label="E-mail"
+        type="email"
+        placeholder="seu@email.com"
+        formControlName="email"
+        [error]="emailError"
+      ></ds-input>
+
+      <ds-input
+        label="Senha"
+        type="password"
+        placeholder="Crie uma senha"
+        formControlName="password"
+        [error]="passwordError"
+      ></ds-input>
+
+      <ds-input
+        label="Confirmar senha"
+        type="password"
+        placeholder="Repita a senha"
+        formControlName="confirmPassword"
+        [error]="confirmPasswordError"
+      ></ds-input>
+
+      <div class="extra-row">
+        <a routerLink="/login" class="link-small">
+          Já tem conta? Voltar para login
+        </a>
+      </div>
+
+      <div class="error-message" *ngIf="apiError">
+        {{ apiError }}
+      </div>
+
+      <ds-button type="submit" variant="primary" [fullWidth]="true" [disabled]="loading">
+        Cadastrar
+      </ds-button>
+    </form>
+  </div>
+</div>
+
+

@@ -1,0 +1,247 @@
+<div class="tasks-page">
+  <div class="tasks-header">
+    <h1>Tarefas</h1>
+    <ds-button variant="primary" type="button" (click)="onCreate()">
+      + Cadastrar
+    </ds-button>
+  </div>
+
+  <hr class="section-divider" />
+
+  <section class="tasks-filters" [formGroup]="filtersForm">
+    <div class="filters-row">
+      <ds-input
+        label="Título"
+        placeholder="Buscar por título"
+        formControlName="title"
+      ></ds-input>
+      <ds-input
+        label="Responsável"
+        placeholder="Nome do responsável"
+        formControlName="responsible"
+      ></ds-input>
+      <ds-datepicker
+        label="Data inicial"
+        formControlName="deadlineFrom"
+      ></ds-datepicker>
+      <ds-datepicker
+        label="Data final"
+        formControlName="deadlineTo"
+      ></ds-datepicker>
+    </div>
+
+        <div class="filters-row secondary">
+          <div class="checkbox-inline">
+            <ds-checkbox
+              label="Apenas em andamento"
+              formControlName="onlyNotConcluded"
+            ></ds-checkbox>
+          </div>
+          <ds-button variant="secondary" type="button" (click)="onSearch()">
+            Buscar
+          </ds-button>
+        </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <section class="tasks-table-wrapper" *ngIf="tasks.length; else emptyState">
+    <table class="tasks-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Responsável</th>
+          <th>Prioridade</th>
+          <th>Prazo</th>
+          <th>Status</th>
+          <th class="col-actions">Ações</th>
+          <th class="col-expand"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let task of tasks; trackBy: trackByTaskId">
+          <tr
+            class="task-row"
+            (click)="onRowClick(task)"
+            [class.task-row-expanded]="isExpanded(task)"
+          >
+            <td>{{ task.title }}</td>
+            <td>{{ task.responsible || '-' }}</td>
+            <td>
+              <span
+                class="priority-pill"
+                [class.priority-high]="task.priority === 'ALTA'"
+                [class.priority-medium]="task.priority === 'MEDIA'"
+                [class.priority-low]="task.priority === 'BAIXA'"
+              >
+                {{
+                  task.priority === 'ALTA'
+                    ? 'Alta'
+                    : task.priority === 'MEDIA'
+                      ? 'Média'
+                      : 'Baixa'
+                }}
+              </span>
+            </td>
+            <td>{{ task.deadline | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <span
+                class="status-pill"
+                [class.status-open]="task.status === 'EM_ANDAMENTO'"
+                [class.status-done]="task.status === 'CONCLUIDA'"
+              >
+                {{ task.status === 'CONCLUIDA' ? 'Concluída' : 'Em andamento' }}
+              </span>
+            </td>
+            <td class="col-actions" (click)="$event.stopPropagation()">
+              <ds-dropdown
+                *ngIf="isAdmin || task.status !== 'CONCLUIDA'"
+                [items]="getTaskActions(task)"
+                (action)="onTaskAction(task, $event)"
+              ></ds-dropdown>
+            </td>
+            <td class="col-expand" (click)="$event.stopPropagation(); onRowClick(task)">
+              <button type="button" class="expand-button">
+                {{ isExpanded(task) ? '▴' : '▾' }}
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="isExpanded(task)" class="task-detail-row">
+            <td colspan="7">
+              <div class="task-detail-content">
+                <strong>Descrição:</strong>
+                <span>
+                  {{ task.description || 'Sem descrição.' }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </section>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <p *ngIf="!loading && !errorMessage">Nenhuma tarefa encontrada.</p>
+      <p *ngIf="errorMessage" class="hint text-danger">{{ errorMessage }}</p>
+      <p *ngIf="!errorMessage" class="hint">
+        Use os filtros acima ou clique em &ldquo;+ Cadastrar&rdquo; para criar uma nova tarefa.
+      </p>
+    </div>
+  </ng-template>
+
+  <div class="modal-backdrop" *ngIf="showCreateModal">
+    <div class="modal">
+      <header class="modal-header">
+        <h2>{{ editingTask ? 'Editar tarefa' : 'Nova tarefa' }}</h2>
+        <button type="button" class="icon-button" (click)="closeCreateModal()">✕</button>
+      </header>
+
+      <form [formGroup]="taskForm" (ngSubmit)="onSaveTask()">
+        <div class="modal-body">
+          <ds-input
+            label="Título"
+            placeholder="Título da tarefa"
+            formControlName="title"
+          ></ds-input>
+
+          <ds-textarea
+            label="Descrição"
+            placeholder="Descrição detalhada (opcional)"
+            formControlName="description"
+            [rows]="3"
+          ></ds-textarea>
+
+          <div class="field">
+            <ds-select-async
+              label="Responsável (opcional)"
+              formControlName="responsibleUserId"
+              [searchFn]="searchUserOptions"
+              [initialLabel]="taskResponsibleInitialLabel ?? ''"
+            ></ds-select-async>
+          </div>
+
+          <div class="row">
+          <div class="field">
+            <ds-select
+              label="Prioridade"
+              formControlName="priority"
+              [options]="priorities"
+            ></ds-select>
+          </div>
+
+            <div class="field">
+              <ds-datepicker
+                label="Prazo"
+                formControlName="deadline"
+              ></ds-datepicker>
+            </div>
+
+            <div class="field">
+              <ds-select
+                label="Status"
+                formControlName="status"
+                [options]="statuses"
+              ></ds-select>
+            </div>
+          </div>
+
+          <div class="error-message" *ngIf="taskModalError">
+            {{ taskModalError }}
+          </div>
+        </div>
+
+        <footer class="modal-footer">
+          <ds-button variant="secondary" type="button" (click)="closeCreateModal()">
+            Cancelar
+          </ds-button>
+          <ds-button type="submit" variant="primary" [disabled]="taskModalLoading">
+            Salvar
+          </ds-button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="linkModalTask">
+    <div class="modal">
+      <header class="modal-header">
+        <h2>Vincular responsável</h2>
+        <button type="button" class="icon-button" (click)="closeLinkModal()">✕</button>
+      </header>
+
+      <form [formGroup]="linkForm" (ngSubmit)="onSaveLink()">
+        <div class="modal-body">
+          <p class="modal-description">
+            Selecione o usuário que será responsável pela tarefa
+            <strong>{{ linkModalTask?.title }}</strong>.
+          </p>
+
+          <div class="field">
+            <ds-select-async
+              label="Responsável"
+              formControlName="responsibleUserId"
+              [searchFn]="searchUserOptions"
+              [initialLabel]="linkResponsibleInitialLabel ?? ''"
+            ></ds-select-async>
+          </div>
+
+          <div class="error-message" *ngIf="linkModalError">
+            {{ linkModalError }}
+          </div>
+        </div>
+
+        <footer class="modal-footer">
+          <ds-button variant="secondary" type="button" (click)="closeLinkModal()">
+            Cancelar
+          </ds-button>
+          <ds-button type="submit" variant="primary" [disabled]="linkModalLoading">
+            Salvar
+          </ds-button>
+        </footer>
+      </form>
+    </div>
+  </div>
+</div>
+

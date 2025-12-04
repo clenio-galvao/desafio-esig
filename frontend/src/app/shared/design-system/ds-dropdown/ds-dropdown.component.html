@@ -1,0 +1,29 @@
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="menu"
+  class="ds-dropdown-trigger"
+  type="button"
+>
+  <span class="ds-dropdown-trigger-icon">{{ icon }}</span>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let item of items"
+    (click)="onItemClick(item)"
+  >
+    <span
+      [ngClass]="{
+        'ds-dropdown-item-danger': item.variant === 'danger',
+        'ds-dropdown-item-disabled': item.disabled
+      }"
+      [matTooltip]="item.tooltip"
+      [matTooltipDisabled]="!item.tooltip"
+    >
+      {{ item.label }}
+    </span>
+  </button>
+</mat-menu>
+
+

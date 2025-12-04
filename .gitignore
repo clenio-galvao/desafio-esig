@@ -1,0 +1,41 @@
+# Arquivos e pastas do sistema operacional
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# IDEs / Editores
+.idea/
+.vscode/
+*.iml
+
+# Logs
+logs/
+*.log
+
+# Backend (Java / Maven / Gradle / Spring Boot)
+backend/target/
+backend/.mvn/
+backend/.gradle/
+backend/build/
+backend/out/
+backend/*.iml
+
+# Arquivos de configuração sensíveis (ex.: variáveis de ambiente)
+.env
+.env.*
+
+# Frontend (Node / Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+frontend/package-lock.json
+frontend/yarn.lock
+
+# Arquivos temporários
+*.tmp
+*.swp
+*.swo
+
+

@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    # Em produção, a URL do banco pode ser definida via variável de ambiente DB_URL.
+    # Exemplo: jdbc:postgresql://host:5432/desafio_esig
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/desafio_esig}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:CHANGE_ME_SECRET_KEY}
+      expiration: 36000000 # 10 horas em milissegundos
+
+

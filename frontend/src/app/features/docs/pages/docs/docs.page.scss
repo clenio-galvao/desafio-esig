@@ -1,0 +1,75 @@
+.docs-page {
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.docs-card {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.docs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.docs-card h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.docs-card h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.docs-card p {
+  margin: 0.25rem 0 0.75rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.docs-card ul {
+  margin: 0.25rem 0 0.75rem 1.25rem;
+  padding: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.docs-card li + li {
+  margin-top: 0.25rem;
+}
+
+.docs-card code {
+  background: #f3f4f6;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.back-button {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  background-color: #ffffff;
+  color: #374151;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #f3f4f6;
+}
+
+
+

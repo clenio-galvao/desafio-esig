@@ -1,0 +1,48 @@
+@use '@angular/material' as mat;
+
+// Tema global Angular Material (tema padrão)
+@include mat.core();
+
+$app-theme: mat.define-theme(());
+@include mat.all-component-themes($app-theme);
+
+/* Reset leve / base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Utilidades globais */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.text-danger {
+  color: #b91c1c;
+}
+
+.text-success {
+  color: #047857;
+}

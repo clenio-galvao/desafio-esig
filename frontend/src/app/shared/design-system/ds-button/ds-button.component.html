@@ -1,0 +1,16 @@
+<button
+  mat-raised-button
+  class="ds-button"
+  [color]="variant === 'secondary' ? 'accent' : variant === 'ghost' ? undefined : 'primary'"
+  [ngClass]="{
+    'ds-button--secondary': variant === 'secondary',
+    'ds-button--ghost': variant === 'ghost',
+    'ds-button--full': fullWidth
+  }"
+  [type]="type"
+  [disabled]="disabled"
+>
+  <ng-content></ng-content>
+</button>
+
+

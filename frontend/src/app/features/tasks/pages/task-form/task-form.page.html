@@ -1,0 +1,70 @@
+<div class="task-form-page" [formGroup]="form">
+  <h1>{{ isEditMode ? 'Editar tarefa' : 'Nova tarefa' }}</h1>
+
+  <form (ngSubmit)="onSubmit()">
+    <ds-input
+      label="Título"
+      placeholder="Título da tarefa"
+      formControlName="title"
+      [error]="titleError"
+    ></ds-input>
+
+    <ds-input
+      label="Descrição"
+      placeholder="Descrição detalhada (opcional)"
+      formControlName="description"
+    ></ds-input>
+
+    <ds-select-async
+      label="Responsável (opcional)"
+      formControlName="responsibleUserId"
+      [searchFn]="searchUserOptions"
+      [initialLabel]="responsibleInitialLabel ?? ''"
+    ></ds-select-async>
+
+    <div class="row">
+      <div class="field">
+        <label for="priority">Prioridade</label>
+        <select id="priority" formControlName="priority">
+          <option *ngFor="let p of priorities" [value]="p.value">
+            {{ p.label }}
+          </option>
+        </select>
+        <div class="field-error" *ngIf="priorityError">
+          {{ priorityError }}
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="deadline">Deadline</label>
+        <input id="deadline" type="date" formControlName="deadline" />
+        <div class="field-error" *ngIf="deadlineError">
+          {{ deadlineError }}
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+          <option *ngFor="let s of statuses" [value]="s.value">
+            {{ s.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="apiError">
+      {{ apiError }}
+    </div>
+
+    <div class="actions">
+      <ds-button variant="secondary" type="button" (click)="onBack()">
+        Voltar
+      </ds-button>
+      <ds-button type="submit" variant="primary" [disabled]="loading">
+        Salvar
+      </ds-button>
+    </div>
+  </form>
+</div>
+

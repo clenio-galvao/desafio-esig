@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: desafio-esig-backend
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+
+# Configurações gerais de segurança / JWT (podem ser sobrescritas por perfil)
+app:
+  security:
+    jwt:
+      secret: CHANGE_ME_SECRET_KEY
+      expiration: 36000000 # 10 horas em milissegundos
+

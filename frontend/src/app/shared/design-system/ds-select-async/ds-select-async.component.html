@@ -1,0 +1,39 @@
+<mat-form-field appearance="outline" class="ds-select-async" [class.ds-select-async--error]="error">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+
+  <mat-select
+    [disabled]="disabled"
+    [value]="value"
+    (openedChange)="onOpenedChange($event)"
+    (selectionChange)="onSelectionChange($event.value)"
+    (blur)="onBlur()"
+  >
+    <mat-option>
+      <input
+        matInput
+        type="text"
+        [placeholder]="placeholder"
+        [value]="searchTerm"
+        (input)="onSearchInput($any($event.target).value)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <mat-option *ngFor="let opt of options" [value]="opt.value">
+      <div class="option-main">{{ opt.label }}</div>
+      <div class="option-description" *ngIf="opt.description">
+        {{ opt.description }}
+      </div>
+    </mat-option>
+  </mat-select>
+
+  <mat-hint *ngIf="!error && hint">
+    {{ hint }}
+  </mat-hint>
+
+  <mat-error *ngIf="error">
+    {{ error }}
+  </mat-error>
+</mat-form-field>
+
+

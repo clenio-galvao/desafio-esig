@@ -1,0 +1,29 @@
+<div class="app-shell">
+  <header class="app-header">
+    <div class="logo">
+      <a routerLink="/tasks" class="logo-link">ESIG Tasks</a>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/docs" class="docs-link">Documentação</a>
+      <ng-container *ngIf="userName as name">
+        <span class="user-name">
+          {{ name }}
+        </span>
+        <button type="button" class="logout-button" (click)="onLogout()">
+          Sair
+        </button>
+      </ng-container>
+    </div>
+  </header>
+
+  <main class="app-content">
+    <div class="page-container">
+      <section class="global-messages" aria-live="polite">
+        <app-toast-container></app-toast-container>
+      </section>
+
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+
