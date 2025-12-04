@@ -92,7 +92,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:4200",
-                "https://desafio-esig-1po552cgr-cleniogalvaos-projects.vercel.app"
+                "https://desafio-esig-1po552cgr-cleniogalvaos-projects.vercel.app",
+                "https://desafio-esig-bice.vercel.app/"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
