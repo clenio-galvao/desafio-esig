@@ -1,4 +1,5 @@
-.ds-button {
+.ds-button,
+.ds-button.mat-mdc-raised-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -12,8 +13,8 @@
   line-height: 1.2;
 
   /* Azul padrão com texto branco para botões primários */
-  background-color: #2563eb;
-  color: #ffffff;
+  background-color: #2563eb !important;
+  color: #ffffff !important;
 
   transition:
     background-color 0.15s ease,
@@ -21,12 +22,14 @@
     transform 0.05s ease;
 }
 
-.ds-button:hover:not(:disabled) {
+.ds-button:hover:not(:disabled),
+.ds-button.mat-mdc-raised-button:hover:not(:disabled) {
   background-color: #1d4ed8;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
-.ds-button:active:not(:disabled) {
+.ds-button:active:not(:disabled),
+.ds-button.mat-mdc-raised-button:active:not(:disabled) {
   transform: translateY(1px);
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
 }
