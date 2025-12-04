@@ -1,9 +1,10 @@
 // Base URL da API.
 // Em produção, pode ser configurado via variável de ambiente NG_APP_API_BASE_URL
 // (por exemplo, na Vercel). Em desenvolvimento, cai no fallback localhost.
-const envBaseUrl = (import.meta as any).env?.NG_APP_API_BASE_URL as string | undefined;
+// const envBaseUrl = (import.meta as any).env?.NG_APP_API_BASE_URL as string | undefined;
 
-export const API_BASE_URL = envBaseUrl || 'http://localhost:8080/api/v1';
+export const API_BASE_URL = 'http://desafio-esig-production.up.railway.app:8080/api/v1';
+//export const API_BASE_URL = 'http://localhost:8080/api/v1';
 
 export const API_ENDPOINTS = {
   auth: {
